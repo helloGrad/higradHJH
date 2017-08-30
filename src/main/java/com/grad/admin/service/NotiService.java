@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.grad.admin.repository.NotiDao;
-import com.grad.admin.vo.CodeVo;
 import com.grad.admin.vo.NotiVo;
 
 @Service
@@ -56,19 +55,6 @@ public class NotiService {
 	}
 
 
-	/*
-	 * 허주한 2017/08/29
-	 */
-	public List<CodeVo> getCode(String type) {
-		// TODO Auto-generated method stub
-		String dstnct=null;
-		if(type.equals("학과")) {
-			dstnct="학과";
-		} else if(type.equals("연구실")){
-			dstnct="연구분야";
-		}
-		
-		return notiDao.getCode(dstnct);
-	}
+
 
 }

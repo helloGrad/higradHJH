@@ -56,12 +56,6 @@ public class NotiDao {
 		sqlSession.update("noti.updateNoti", map);		
 	}
 
-	/*
-	 * 허주한 2017/08/29
-	 */
-	public List<CodeVo> getCode(String dstnct) {
-		// TODO Auto-generated method stub
-		return sqlSession.selectList("noti.getCode", dstnct);
-	}
+
 
 }

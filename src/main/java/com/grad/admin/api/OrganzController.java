@@ -28,5 +28,15 @@ public class OrganzController {
 		return JSONResult.success(list);
 
 	}
+	
+	/*
+	 * 허주한 2017/08/29
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getcode")
+	public JSONResult getCode(@RequestParam String type) {
+		return JSONResult.success(organzService.getCode(type));
+
+	}
 
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.grad.admin.repository.OrganzDao;
+import com.grad.admin.vo.CodeVo;
 import com.grad.admin.vo.OrganzVo;
 import com.grad.admin.vo.ResrchAcrsltVo;
 
@@ -169,6 +170,22 @@ public class OrganzService {
 	 */
 	public List<OrganzVo> getResultList(Map<String, Object> map) {
 		return organzDao.getResultList(map);
+	}
+	
+	/////////////////////////////////////////////맞춤검색/////////////////////////////////
+	/*
+	 * 허주한 2017/08/29
+	 */
+	public List<CodeVo> getCode(String type) {
+		// TODO Auto-generated method stub
+		String dstnct=null;
+		if(type.equals("학과")) {
+			dstnct="학과";
+		} else if(type.equals("연구실")){
+			dstnct="연구분야";
+		}
+		
+		return organzDao.getCode(dstnct);
 	}
 
 }

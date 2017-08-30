@@ -120,15 +120,7 @@
 	</update>
 	
 	
-	<!-- 허주한 2017/08/29-->
-	<select id="getCode" resultType="codeVo" parameterType="string">
-			<![CDATA[
-			SELECT CD_ID cdId, CD_NM cdNm, ENG_CODE_NM engCodeNm, CD_DSTNCT cdDstnct, PRNTS_CD_ID prntsCdId
-			FROM CD
-			WHERE CD_DSTNCT=#{dstnct}
-			ORDER BY 2;
-			]]>
-	</select>
+
 
 
 
