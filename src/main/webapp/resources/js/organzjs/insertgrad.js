@@ -97,7 +97,7 @@ var checkDuplicate = function(name){
 var fetchListByType=function(type){
 	
 	$.ajax({
-		url : "/admin/noti/api/getcode?type="+type,
+		url : "/admin/organz/api/getcode?type="+type,
 		type : "get",
 		dataType : "json",
 		data : "",
