@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member">
+
+	<!-- 정예린 박가혜 -->
+
+	<insert id="insert" parameterType="memberVo">
+		<![CDATA[	
+			insert into MB (MB_NO, MB_DSTNCT, MB_NM, NKNM, IDEN, PW, SEX, MYSELF_AUTHZ_YN, INSRD_DD, WTHDR_DD)
+			values (null, '관리자',#{mbNm }, #{nknm },#{iden },password(#{pw }),#{sex },'Y',date_format(now(),'%Y%m%d'),'99991231')
+		]]>
+	</insert>
+
+
+	<select id="getByIden" parameterType="string" resultType="memberVo">
+	<![CDATA[
+	
+		select * 
+		from MB 
+		where IDEN=#{iden }		
+	]]>
+	</select>
+
+	<select id="getByLoginInfo" parameterType="map" resultType="memberVo">  <!-- 객체면 변수 이름으로 해야함 uservo 일경우 vo로, 반환할 타입이 마땅히 없는 경우 map -->
+		<![CDATA[
+		select MB_NO as "mbNo",IDEN as "iden",MB_DSTNCT as "mbDstnct",NKNM as "nknm" 
+		from mb 
+		where IDEN=#{iden } 
+		and PW=password(#{pw })
+		]]>
+	</select>
+
+
+
+</mapper>

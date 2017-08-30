@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="organz">
+
+	<!-- get -->
+
+	<!-- 허주한 -->
+	<select id="getOrgnzList" parameterType="string" resultType="organzVo">
+		<![CDATA[	
+		select orgnz_no orgnzNo, orgnz_full_nm orgnzFullNm, ENG_ORGNZ_NM engOrgnzNm, ORGNZ_DSTNCT orgnzDstnct
+		from organz
+		where ORGNZ_DSTNCT like #{type}
+		]]>
+	</select>
+
+
+	<!-- 정예린 -->
+	<select id="getUniByNo" parameterType="map" resultType="organzVo">
+	<![CDATA[
+		select orgnz_no orgnzNo, orgnz_nm orgnzNm, ENG_ORGNZ_NM engOrgnzNm,
+		ORGNZ_DSTNCT orgnzDstnct, HMPAGE_URL hmpageUrl, TEL_NO telNo, FAX_NO
+		faxNo, ADDR addr, DETAIL_ADDR detailAddr, PRNTS_ORGNZ_NO prntsOrgnzNo, orgnz_full_nm orgnzFullNm,
+		MAP_PROF_NM mapProfNm, LAB_INTRO labIntro, RSRCHR_INFO_TEXT rsrchrInfoText, HMNBRD_DSTNCT hmnbrdDstnct
+		from organz
+		where ORGNZ_DSTNCT=#{type}
+		and orgnz_no = #{no}
+		]]>
+	</select>
+
+	<!-- 허주한 정예린-->
+	<select id="getOrgnzByNo" parameterType="map" resultType="organzVo">
+		<![CDATA[		
+		select o1.orgnz_no orgnzNo, o1.orgnz_nm orgnzNm, o1.ENG_ORGNZ_NM engOrgnzNm, o1.ORGNZ_DSTNCT orgnzDstnct, o1.HMPAGE_URL hmpageUrl, 
+		o1.TEL_NO telNo, o1.FAX_NO faxNo, o1.ADDR addr, o1.DETAIL_ADDR detailAddr, 
+		o1.PRNTS_ORGNZ_NO prntsOrgnzNo, o2.orgnz_full_nm orgnzFullNm, o1.MAP_PROF_NM mapProfNm, o1.LAB_INTRO labIntro, o1.RSRCHR_INFO_TEXT rsrchrInfoText, 
+		o1.HMNBRD_DSTNCT hmnbrdDstnct 
+		from organz o1, organz o2
+		where o1.ORGNZ_DSTNCT=#{type}
+		and o1.orgnz_no = #{no}
+		and o1.PRNTS_ORGNZ_NO=o2.orgnz_no
+		]]>
+	</select>
+
+
+	<!-- 허주한 정예린 -->
+	<select id="getByNo" resultType="organzVo">
+		<![CDATA[
+		select o1.orgnz_no orgnzNo, o1.orgnz_nm orgnzNm, o1.ENG_ORGNZ_NM engOrgnzNm, o1.ORGNZ_DSTNCT orgnzDstnct, o1.HMPAGE_URL hmpageUrl, o1.TEL_NO telNo, o1.FAX_NO faxNo, o1.ADDR addr, 
+		o1.DETAIL_ADDR detailAddr, o1.PRNTS_ORGNZ_NO prntsOrgnzNo, o1.MAP_PROF_NM mapProfNm, o1.LAB_INTRO labIntro, o1.RSRCHR_INFO_TEXT rsrchrInfoText, o1.HMNBRD_DSTNCT hmnbrdDstnct, 
+		o2.orgnz_full_nm orgnzFullNm
+		from organz o1, organz o2
+		where o1.ORGNZ_DSTNCT='연구실'
+		and o1.orgnz_no = #{no}
+		and o1.PRNTS_ORGNZ_NO=o2.orgnz_no
+		]]>
+	</select>
+
+
+	<!-- 박가혜 -->
+	<select id="selectOrganzLabList" resultType="organzVo">
+		<![CDATA[
+		select orgnz_no orgnzNo, orgnz_nm orgnzNm, ENG_ORGNZ_NM engOrgnzNm, ORGNZ_DSTNCT orgnzDstnct,
+		HMPAGE_URL hmpageUrl,TEL_NO telNo, FAX_NO faxNo, ADDR addr, DETAIL_ADDR detailAddr, PRNTS_ORGNZ_NO prntsOrgnzNo, 
+		MAP_PROF_NM mapProfNm, LAB_INTRO labIntro, RSRCHR_INFO_TEXT rsrchrInfoText, HMNBRD_DSTNCT hmnbrdDstnct, orgnz_full_nm orgnzFullNm
+        from organz
+		where ORGNZ_DSTNCT='연구실'
+		]]>
+	</select>
+
+	<!-- 박가혜 -->
+	<select id="getResrchList" resultType="resrchAcrsltVo"
+		parameterType="int">
+		<![CDATA[
+		select RESRCH_ACRSLT_NO resrchAcrsltNo,ORGNZ_NO orgnzNo,ACRSLT_DSTNCT acrsltDstnct,REGST_DT regstDt,RESRCH_YYCL resrchYycl,RESRCH_TEXT resrchText
+		from resrch_acrslt
+		where ORGNZ_NO=#{orgnzNo}
+		]]>
+	</select>
+
+	<!-- 박가혜 -->
+	<select id="getResrchNo" resultType="resrchAcrsltVo"
+		parameterType="int">
+		<![CDATA[
+		select RESRCH_ACRSLT_NO resrchAcrsltNo,ORGNZ_NO orgnzNo,ACRSLT_DSTNCT acrsltDstnct,REGST_DT regstDt,RESRCH_YYCL resrchYycl,RESRCH_TEXT resrchText
+		from resrch_acrslt
+		where RESRCH_ACRSLT_NO=#{resrchAcrsltNo}
+		]]>
+	</select>
+
+
+
+
+	<!-- insert -->
+
+
+	<!-- 허주한 -->
+	<insert id="insertGrad" parameterType="organzVo">
+		<![CDATA[
+		insert into organz (ORGNZ_NM, ENG_ORGNZ_NM, ORGNZ_DSTNCT, HMPAGE_URL, TEL_NO, FAX_NO, ADDR, DETAIL_ADDR, PRNTS_ORGNZ_NO, HMNBRD_DSTNCT, orgnz_full_nm, GRSCH_DSTNCT)
+		values(#{orgnzNm}, #{engOrgnzNm}, #{orgnzDstnct}, #{hmpageUrl}, #{telNo}, #{faxNo}, #{addr}, #{detailAddr}, 
+		]]>
+		<!-- 부모번호 없는경우 (대학교 입력) -->
+		<if test="prntsOrgnzNo == -1 ">
+		<![CDATA[ 
+		 0, #{hmnbrdDstnct}, #{orgnzNm}, null);
+		]]>
+		</if>
+		<!-- 부모번호 있는경우 -->
+		<if test="orgnzDstnct == '연구실'">
+		<![CDATA[ 
+		 #{prntsOrgnzNo}, #{hmnbrdDstnct},concat(#{orgnzFullNm},' ',#{orgnzNm}), null);
+		]]>
+		</if>
+		
+		<if test="orgnzDstnct == '대학원'">
+		<![CDATA[ 
+		 #{prntsOrgnzNo}, #{hmnbrdDstnct},concat(#{orgnzFullNm},' ',#{orgnzNm}), #{grschDstnct});
+		]]>
+		</if>
+
+		<selectKey keyProperty="id" resultType="int">
+		<![CDATA[ 
+        SELECT LAST_INSERT_ID()
+        ]]>
+		</selectKey>
+	</insert>
+
+	<!-- 박가혜 -->
+	<insert id="insertLab" parameterType="organzVo">
+		<![CDATA[	
+			insert into organz (ORGNZ_NO, ORGNZ_NM, ENG_ORGNZ_NM, ORGNZ_DSTNCT, HMPAGE_URL, TEL_NO, FAX_NO, ADDR, DETAIL_ADDR, PRNTS_ORGNZ_NO, MAP_PROF_NM, LAB_INTRO, RSRCHR_INFO_TEXT, HMNBRD_DSTNCT, orgnz_full_nm) 
+			values (null, #{orgnzNm}, #{engOrgnzNm}, #{orgnzDstnct},#{hmpageUrl},#{telNo },#{faxNo},#{addr},#{detailAddr},#{prntsOrgnzNo},#{mapProfNm},#{labIntro},#{rsrchrInfoText},#{hmnbrdDstnct},concat(#{orgnzFullNm},' ',#{orgnzNm}))
+		]]>
+	</insert>
+
+	<!-- 박가혜 -->
+	<insert id="insertResrch" parameterType="resrchAcrsltVo">
+		<![CDATA[	
+			insert into resrch_acrslt (RESRCH_ACRSLT_NO, ORGNZ_NO, ACRSLT_DSTNCT, REGST_DT, RESRCH_YYCL, RESRCH_TEXT  ) 
+			values (null, #{orgnzNo}, #{acrsltDstnct}, now() ,#{resrchYycl},#{resrchText})
+		]]>
+	</insert>
+
+
+	<!-- update -->
+	<!-- 허주한  정예린-->
+	<update id="updateGrad" parameterType="organzVo">
+		<![CDATA[
+		update organz
+		set HMNBRD_DSTNCT=#{hmnbrdDstnct}, ORGNZ_DSTNCT=#{orgnzDstnct}, ORGNZ_NM=#{orgnzNm}, ENG_ORGNZ_NM=#{engOrgnzNm}, HMPAGE_URL=#{hmpageUrl}, TEL_NO=#{telNo}, FAX_NO=#{faxNo}, 
+			ADDR=#{addr}, DETAIL_ADDR=#{detailAddr}, 
+		]]>
+
+		<if test="prntsOrgnzNo == -1 ">
+		<![CDATA[ 
+		 PRNTS_ORGNZ_NO=0, ORGNZ_FULL_NM=#{orgnzNm}
+		]]>
+		</if>
+		<if test="prntsOrgnzNo != -1">
+		<![CDATA[ 
+		 PRNTS_ORGNZ_NO=#{prntsOrgnzNo}, ORGNZ_FULL_NM=concat(#{orgnzFullNm},' ',#{orgnzNm})
+		]]>
+		</if>
+		
+		<![CDATA[
+		where ORGNZ_NO=#{orgnzNo};
+		]]>
+	</update>
+
+
+	<!-- 박가혜 정예린 -->
+	<update id="updateOrganz" parameterType="organzVo">
+	<![CDATA[
+		update organz set orgnz_nm=#{orgnzNm},ENG_ORGNZ_NM=#{engOrgnzNm}, ORGNZ_DSTNCT=#{orgnzDstnct}, HMPAGE_URL=#{hmpageUrl}, 
+		TEL_NO=#{telNo}, FAX_NO=#{faxNo}, ADDR=#{addr}, DETAIL_ADDR=#{detailAddr}, PRNTS_ORGNZ_NO=#{prntsOrgnzNo}, 
+		MAP_PROF_NM=#{mapProfNm}, LAB_INTRO=#{labIntro}, RSRCHR_INFO_TEXT=#{rsrchrInfoText},
+		HMNBRD_DSTNCT=#{hmnbrdDstnct}, ORGNZ_FULL_NM=concat(#{orgnzFullNm},' ',#{orgnzNm}) where orgnz_no=#{orgnzNo}
+	]]>
+	</update>
+
+	<!-- 박가혜 -->
+	<update id="updateResrch" parameterType="resrchAcrsltVo">
+	<![CDATA[
+		update resrch_acrslt set ORGNZ_NO=#{orgnzNo},ACRSLT_DSTNCT=#{acrsltDstnct},REGST_DT=#{regstDt},RESRCH_YYCL=#{resrchYycl},RESRCH_TEXT=#{resrchText}
+		where RESRCH_ACRSLT_NO=#{resrchAcrsltNo}
+	]]>
+
+	</update>
+
+
+	<!-- ㄱㄴㄷ페이징 -->
+
+	<!-- 허주한 -->
+	<select id="lastInsertId" resultType="int">
+	<![CDATA[
+	select last_insert_id()
+	]]>
+	</select>
+
+	<!-- 허주한 -->
+	<select id="getListByChar" resultType="organzVo" parameterType="map">
+		<![CDATA[
+		select ORGNZ_NO orgnzNo, ORGNZ_NM orgnzNm, ORGNZ_DSTNCT orgnzDstnct, orgnz_full_nm orgnzFullNm
+		from organz 
+		where ORGNZ_DSTNCT like #{type}
+		and left(ORGNZ_NM,1) between #{start} and #{end}
+		order by 2;
+		]]>
+	</select>
+
+	<!-- 기관 검색하기 -->
+
+	<!--정예린 -->
+	<select id="getResultList" parameterType="map" resultType="organzVo">
+		<![CDATA[	
+			select orgnz_no orgnzNo, orgnz_full_nm orgnzNm, orgnz_dstnct orgnzDstnct
+			from organz
+			where orgnz_full_nm like '%${stext }%'
+			and ORGNZ_DSTNCT = #{type }
+		]]>
+	</select>
+	
+	<!--정예린 연구실의 부모를 찾을 경우 대학원, 학과를 모두 찾음-->
+	<select id="getResultList2" parameterType="map" resultType="organzVo">
+		<![CDATA[	
+			select orgnz_no orgnzNo, orgnz_full_nm orgnzNm, orgnz_dstnct orgnzDstnct
+			from organz
+			where orgnz_full_nm like '%${stext }%'
+			and (orgnz_dstnct=#{type } or orgnz_dstnct=#{type2 })
+		]]>
+	</select>
+	
+
+
+</mapper>

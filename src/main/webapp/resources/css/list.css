@@ -1,0 +1,49 @@
+@charset "UTF-8";
+
+body {
+	padding-top: 40px;
+	/* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+}
+
+.remove-btn {
+	float: right;
+}
+
+i {
+	margin-right: 0.5em;
+}
+
+.centering {
+	float: none;
+	margin: 0 auto;
+}
+
+.nav-line {
+	height: 0.3em;
+	background-color: black;
+}
+
+.nav-filters {
+	font-size: 1.5em;
+}
+
+.tablinks {
+	background-color: inherit;
+	float: left;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	padding: 14px;
+	transition: 0.3s;
+	font-size: 17px;
+}
+
+.tablinks:hover {
+    background-color: #EBEBEB;
+}
+
+/* Create an active/current tablink class */
+.tablinks.active {
+    background-color: #EBEBEB;
+}
+

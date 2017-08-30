@@ -1,0 +1,19 @@
+.tablinks {
+	background-color: inherit;
+	float: left;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	padding: 14px;
+	transition: 0.3s;
+	font-size: 17px;
+}
+
+.tablinks:hover {
+    background-color: #EBEBEB;
+}
+
+/* Create an active/current tablink class */
+.tablinks.active {
+    background-color: #EBEBEB;
+}

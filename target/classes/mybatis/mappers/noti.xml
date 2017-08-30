@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="noti">
+	<!-- 허주한 -->
+	<select id="getNotiList" resultType="notiVo" parameterType="string">
+			<![CDATA[
+			select SLCTN_NOTI_NO slctnNotiNo, ADMIN_NO adminNo, ORGNZ_NO orgnzNo, SLCTN_NOTI_DSTNCT slctnNotiDstnct, SLCTN_TITLE slctnTitle
+			from slctn_noti
+			where SLCTN_NOTI_DSTNCT like concat('%',#{type},'%');
+			
+			]]>
+	</select>
+
+	<!-- 정예린 -->
+	<select id="getGradByNo" resultType="notiVo" parameterType="int">
+		<![CDATA[
+			select s.SLCTN_NOTI_NO slctnNotiNo, s.ADMIN_NO adminNo, s.ORGNZ_NO orgnzNo, o.addr addr, s.SLCTN_NOTI_DSTNCT slctnNotiDstnct, s.NOTI_REGST_DT notiRegstDt, 
+			date_format(s.SLCTN_BEGIN_DT,'%Y%m%d') slctnBeginDt, date_format(s.SLCTN_END_DT,'%Y%m%d') slctnEndDt, 
+			s.SLCTN_TITLE slctnTitle, s.SLCTN_TEXT slctnText,s.SUPRT_QUALF suprtQualf, s.SLCTN_NOPS slctnNops, s.SLSN_MTH slsnMth,
+			s.SBMT_DOC_TEXT sbmtDocText, s.CHRGR_DSTNCT chrgrDstnct,s.CHRGR_NM chrgrNm,s.CHRGR_TEL_NO chrgrTelNo,s.CHRGR_EMAIL chrgrEmail, s.SLCTN_NOTI_URL slctnNotiUrl, s.RCP_MTH rcpMth, s.SLSN_BEGIN_DD slsnBeginDd, s.SLSN_END_DD slsnEndDd,
+			s.SLSN_PLAC slsnPlac,s.SCCN_ANCM_DD sccnAncmDd,s.SCCN_ANCM_MTH sccnAncmMth,s.REGST_BEGIN_DD regstBeginDd,s.REGST_END_DD regstEndDd,s.REGST_MTH regstMth, o.orgnz_full_nm orgnzFullNm
+			from slctn_noti s, organz o
+			where s.ORGNZ_NO=o.ORGNZ_NO
+			and s.SLCTN_NOTI_NO=#{no }
+		]]>
+	</select>
+
+	<!-- 박가혜 -->
+	<select id="getLabByNo" resultType="notiVo" parameterType="int">
+		<![CDATA[
+			select s.SLCTN_NOTI_NO slctnNotiNo, s.ADMIN_NO adminNo, s.ORGNZ_NO orgnzNo, o.addr addr, s.SLCTN_NOTI_DSTNCT slctnNotiDstnct, s.NOTI_REGST_DT notiRegstDt, 
+			date_format(s.SLCTN_BEGIN_DT,'%Y%m%d') slctnBeginDt, date_format(s.SLCTN_END_DT,'%Y%m%d') slctnEndDt, 
+			s.SLCTN_TITLE slctnTitle, s.SLCTN_TEXT slctnText,s.SUPRT_QUALF suprtQualf, s.SLCTN_NOPS slctnNops, s.SLSN_MTH slsnMth,
+			s.SBMT_DOC_TEXT sbmtDocText, s.CHRGR_DSTNCT chrgrDstnct,
+			s.TUITION_SUPRT_YN tuitionSuprtYn, s.LVNC_SUPRT_YN lvncSuprtYn, s.BK21_EORGNZ_SUPRT_YN bk21EorgnzSuprtYn, s.INCET_SUPRT_YN incetSuprtYn, s.LRSTY_JOINGFEE_SUPRT_YN lrstyJoingfeeSuprtYn,
+			s.DORM_SUPRT_YN dormSuprtYn, s.INTERN_YN internYn, s.LRSTY_JOING_YN lrstyJoingYn, s.RESRCH_TASK_JOING_YN resrchTaskJoingYn, s.STDTR_OPPTY_SUPRT_YN stdtrOpptySuprtYn,
+			s.EDU_PGM_JOING_SUPRT_YN eduPgmJoingSuprtYn, s.SUPRT_FVR_TEXT suprtFvrText,
+			s.CHRGR_NM chrgrNm,s.CHRGR_TEL_NO chrgrTelNo,s.CHRGR_EMAIL chrgrEmail,
+			s.SUPRT_QUALF suprtQualf, s.ONLINE_SUPRT_YN onlineSuprtYn, s.PRMRY_RESRCH_FIELD prmryResrchField, o.orgnz_full_nm orgnzFullNm
+			from slctn_noti s, organz o
+			where s.ORGNZ_NO=o.ORGNZ_NO
+			and s.SLCTN_NOTI_NO=#{no }
+		]]>
+
+	</select>
+
+	<!-- 정예린 -->
+	<insert id="insertNoti" parameterType="map">
+		<![CDATA[
+			 insert into slctn_noti (SLCTN_NOTI_NO, ADMIN_NO, ORGNZ_NO, NOTI_REGST_DT, SLCTN_BEGIN_DT, SLCTN_END_DT, SLCTN_TITLE, SLCTN_TEXT,SUPRT_QUALF, SLCTN_NOPS, SLSN_MTH,
+			SBMT_DOC_TEXT, CHRGR_DSTNCT,CHRGR_NM,CHRGR_TEL_NO,CHRGR_EMAIL, SLCTN_NOTI_DSTNCT,
+		]]>
+		<choose>
+			<when test="tabnm =='grad'">
+				<![CDATA[
+					SLCTN_NOTI_URL, RCP_MTH,SLSN_BEGIN_DD,SLSN_END_DD,SLSN_PLAC,SCCN_ANCM_DD,SCCN_ANCM_MTH,REGST_BEGIN_DD,REGST_END_DD,REGST_MTH)
+				]]>
+			</when>
+			<when test="tabnm =='lab'">
+				<![CDATA[
+					TUITION_SUPRT_YN,LVNC_SUPRT_YN,BK21_EORGNZ_SUPRT_YN,INCET_SUPRT_YN,LRSTY_JOINGFEE_SUPRT_YN,DORM_SUPRT_YN,INTERN_YN,
+					LRSTY_JOING_YN,RESRCH_TASK_JOING_YN,STDTR_OPPTY_SUPRT_YN,EDU_PGM_JOING_SUPRT_YN,SUPRT_FVR_TEXT,ONLINE_SUPRT_YN,PRMRY_RESRCH_FIELD)
+				]]>
+			</when>
+		</choose>
+		<![CDATA[
+	 		values (null,10,#{notiVo.orgnzNo },now(),#{notiVo.slctnBeginDt },#{notiVo.slctnEndDt },
+			#{notiVo.slctnTitle }, #{notiVo.slctnText },#{notiVo.suprtQualf },#{notiVo.slctnNops },#{notiVo.slsnMth },#{notiVo.sbmtDocText },
+			'비회원',#{notiVo.chrgrNm },#{notiVo.chrgrTelNo },#{notiVo.chrgrEmail },		
+		]]>
+		<choose>
+			<when test="tabnm =='grad'">
+				<![CDATA[
+					'대학원',#{notiVo.slctnNotiUrl },#{notiVo.rcpMth },#{notiVo.slsnBeginDd },#{notiVo.slsnEndDd },#{notiVo.slsnPlac },#{notiVo.sccnAncmDd },
+					#{notiVo.sccnAncmMth },#{notiVo.regstBeginDd },#{notiVo.regstEndDd },#{notiVo.regstMth })
+				]]>
+			</when>
+			<when test="tabnm =='lab'">
+				<![CDATA[
+					'연구실',ifnull(#{notiVo.tuitionSuprtYn },'N'),ifnull(#{notiVo.lvncSuprtYn },'N'),ifnull(#{notiVo.bk21EorgnzSuprtYn },'N'),
+					ifnull(#{notiVo.incetSuprtYn },'N'),ifnull(#{notiVo.lrstyJoingfeeSuprtYn },'N'),ifnull(#{notiVo.dormSuprtYn },'N'),
+					ifnull(#{notiVo.internYn },'N'),ifnull(#{notiVo.lrstyJoingYn },'N'),ifnull(#{notiVo.resrchTaskJoingYn },'N'),
+					ifnull(#{notiVo.stdtrOpptySuprtYn },'N'),ifnull(#{notiVo.eduPgmJoingSuprtYn },'N'),#{notiVo.suprtFvrText },ifnull(#{notiVo.onlineSuprtYn },'N'),#{notiVo.prmryResrchField })
+				]]>
+			</when>
+		</choose>
+	</insert>
+
+	<!-- 정예린 -->
+	<update id="updateNoti" parameterType="map">
+		<![CDATA[
+			update slctn_noti set
+			ADMIN_NO=#{notiVo.adminNo }, ORGNZ_NO=#{notiVo.orgnzNo }, NOTI_REGST_DT=now(), SLCTN_BEGIN_DT=#{notiVo.slctnBeginDt }, SLCTN_END_DT=#{notiVo.slctnEndDt }, 
+			SLCTN_TITLE=#{notiVo.slctnTitle }, SLCTN_TEXT=#{notiVo.slctnText }, SLCTN_NOPS=#{notiVo.slctnNops }, SLSN_MTH=#{notiVo.slsnMth }, SBMT_DOC_TEXT=#{notiVo.sbmtDocText }, 
+			CHRGR_DSTNCT='비회원', CHRGR_NM=#{notiVo.chrgrNm }, CHRGR_TEL_NO=#{notiVo.chrgrTelNo }, CHRGR_EMAIL=#{notiVo.chrgrEmail }, SUPRT_QUALF=#{notiVo.suprtQualf },
+		]]>
+		<choose>
+			<when test="tabnm =='grad'">
+				<![CDATA[
+					SLCTN_NOTI_DSTNCT='대학원', 
+					SLCTN_NOTI_URL=#{notiVo.slctnNotiUrl }, RCP_MTH=#{notiVo.rcpMth }, SLSN_PLAC=#{notiVo.slsnPlac }, SCCN_ANCM_DD=#{notiVo.sccnAncmDd }, SCCN_ANCM_MTH=#{notiVo.sccnAncmMth }, 
+					REGST_BEGIN_DD=#{notiVo.regstBeginDd }, REGST_END_DD=#{notiVo.regstEndDd }, REGST_MTH=#{notiVo.regstMth }, SLSN_BEGIN_DD=#{notiVo.slsnBeginDd }, SLSN_END_DD=#{notiVo.slsnEndDd }
+				]]>
+			</when>
+			<when test="tabnm =='lab'">
+				<![CDATA[
+					SLCTN_NOTI_DSTNCT='연구실', 
+					TUITION_SUPRT_YN=ifnull(#{notiVo.tuitionSuprtYn },'N'),LVNC_SUPRT_YN=ifnull(#{notiVo.lvncSuprtYn },'N'),BK21_EORGNZ_SUPRT_YN=ifnull(#{notiVo.bk21EorgnzSuprtYn },'N'),
+					INCET_SUPRT_YN=ifnull(#{notiVo.incetSuprtYn },'N'),LRSTY_JOINGFEE_SUPRT_YN=ifnull(#{notiVo.lrstyJoingfeeSuprtYn },'N'),DORM_SUPRT_YN=ifnull(#{notiVo.dormSuprtYn },'N'),
+					INTERN_YN=ifnull(#{notiVo.internYn },'N'),LRSTY_JOING_YN=ifnull(#{notiVo.lrstyJoingYn },'N'),RESRCH_TASK_JOING_YN=ifnull(#{notiVo.resrchTaskJoingYn },'N'),
+					STDTR_OPPTY_SUPRT_YN=ifnull(#{notiVo.stdtrOpptySuprtYn },'N'),EDU_PGM_JOING_SUPRT_YN=ifnull(#{notiVo.eduPgmJoingSuprtYn },'N'),SUPRT_FVR_TEXT=#{notiVo.suprtFvrText },
+					ONLINE_SUPRT_YN=ifnull(#{notiVo.onlineSuprtYn },'N'),PRMRY_RESRCH_FIELD=#{notiVo.prmryResrchField }
+				]]>
+			</when>
+		</choose>
+		<![CDATA[
+	 		where SLCTN_NOTI_NO=#{notiVo.slctnNotiNo }
+		]]>
+	</update>
+	
+	
+	<!-- 허주한 2017/08/29-->
+	<select id="getCode" resultType="codeVo" parameterType="string">
+			<![CDATA[
+			SELECT CD_ID cdId, CD_NM cdNm, ENG_CODE_NM engCodeNm, CD_DSTNCT cdDstnct, PRNTS_CD_ID prntsCdId
+			FROM CD
+			WHERE CD_DSTNCT=#{dstnct}
+			ORDER BY 2;
+			]]>
+	</select>
+
+
+
+</mapper>

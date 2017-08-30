@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="apndngfile">
+
+	<!-- 허주한 -->
+	<insert id="insert" parameterType="apndngFileVo">
+		<![CDATA[
+		insert into apndng_file 
+		values(null, #{prntsDstnct}, #{apndngFileNm}, #{apndngFileSize}, #{apndngFileEtsionNm}, #{storgPath}, now(), #{prntsNo}); 
+		]]>
+
+	</insert>
+
+	<select id="getFileInfo" parameterType="long" resultType="apndngFileVo">
+		<![CDATA[
+		select APNDNG_FILE_NM apndngFileNm, APNDNG_FILE_SIZE apndngFileSize, STORG_PATH storgPath
+		from apndng_file
+		WHERE APNDNG_FILE_NO = #{id};
+		]]>
+	</select>
+
+	<select id="getFileList" parameterType="map" resultType="apndngFileVo">
+		<![CDATA[
+		select APNDNG_FILE_NO apndngFileNo, APNDNG_FILE_NM apndngFileNm, APNDNG_FILE_SIZE apndngFileSize, STORG_PATH storgPath
+		from apndng_file
+		WHERE PRNTS_NO = #{no}
+		and PRNTS_DSTNCT=#{type};
+		]]>
+	</select>
+
+</mapper>
