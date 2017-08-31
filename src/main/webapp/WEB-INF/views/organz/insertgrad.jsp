@@ -12,9 +12,10 @@
 	href="${pageContext.request.contextPath}/resources/css/adminform.css">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jquery.flexbox.min.js"></script>
 <style type="text/css">
 #organzinfo {
 	visibility: hidden;
@@ -23,10 +24,18 @@
 }
 /* autocomplete 스크롤 관련 css*/
 .ui-autocomplete {
-    max-height: 10em;
-    overflow-y: auto;
-    /* prevent horizontal scrollbar */
-    overflow-x: hidden;
+            max-height: 100px;
+            overflow-y: auto;
+            /* prevent horizontal scrollbar */
+            overflow-x: hidden;
+            /* add padding to account for vertical scrollbar */
+            padding-right: 20px;
+    }
+    /* IE 6 doesn't support max-height
+     * we use height instead, but this forces the menu to always be this tall
+     */
+    * html .ui-autocomplete {
+        heigh
 </style>
 </head>
 <body>
@@ -104,10 +113,12 @@
 					<!-- 맞춤정보 입력란 -->
 					<div class="ui-widget">
   					<label for="tags">Tags: </label>
-  					<input id="tags">
+  					<input id="tags"> 
+  					</div>
+  					<div id="duplicateMsg" style="display: none">중복입니다 !!</div>
   					<div id="cdNmList">
   					</div>
-					</div>
+					
 				</div>
 
 				<button type="submit" class="btn btn-primary btn-lg">입력</button>
@@ -123,7 +134,7 @@
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/js/search.js"></script>
 	<script type="text/javascript"
-		src="${pageContext.request.contextPath}/resources/js/organzjs/insertgrad.js"></script>
+		src="${pageContext.request.contextPath}/resources/js/organzjs/insertgrad3.js"></script>
 
 </body>
 </html>

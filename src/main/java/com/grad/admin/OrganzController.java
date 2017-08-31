@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.grad.admin.security.Auth;
@@ -19,7 +18,6 @@ import com.grad.admin.service.ApndngFileService;
 import com.grad.admin.service.OrganzService;
 import com.grad.admin.vo.ApndngFileVo;
 import com.grad.admin.vo.CodeForm;
-import com.grad.admin.vo.CodeVo;
 import com.grad.admin.vo.OrganzVo;
 import com.grad.admin.vo.ResrchAcrsltVo;
 
@@ -127,7 +125,6 @@ public class OrganzController {
 		ApndngFileVo vo = null;
 //		System.out.println(codeForm.getCodes().get(0));
 		
-		System.out.println(organzVo.getOrgnzDstnct()+"----"+resrchAcrsltVo);
 
 		if (organzVo.getOrgnzDstnct().equals("연구실")) {
 
