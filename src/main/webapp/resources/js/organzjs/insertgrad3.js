@@ -5,7 +5,8 @@ var resultSet = new Array();
 var NoResultsMsg = "검색 결과가 없음";
 var index=0;
 var checkList = [];
-var testList = ['1','2','3','가'];
+
+
 var clickDelete=function(id){
 	//선택제거되면 리스트에 다시 추가
 	$("#"+id).remove();
@@ -147,7 +148,30 @@ $(function () {
                     
                 },
                 select:function(event, ui, request, response){
-                	console.log(ui)
+                	if(checkDuplicate(ui.item.label)){
+                		$("#duplicateMsg").css("display","block");
+                		$("#tags").select();
+                		return;
+                	}
+                	
+                	if(ui.item.label===NoResultsMsg){
+                		event.preventDefault();
+                		return;
+                	}else{
+                		
+                		var name = ui.item.label
+                		var no = findNo(ui.item.label);
+                		$("#duplicateMsg").css("display","none");
+                		$("#cdNmList").append("<div id='"+resultSet[no]["cdId"]+"'><span id='cdNm' name='cdNm' val='"+resultSet[no]["cdId"]+"'>"+resultSet[no]["cdNm"]	+"</span>" +
+                				"<button id='deleteBtn' type='button' onclick='clickDelete(\""+resultSet[no]['cdId']+"\");' class='btn'>X</button>" +
+                						"<input type='hidden' name='codes["+index+"].cdId' value='"+resultSet[no]["cdId"]+"'>" +
+                						"<input type='hidden' name='codes["+index+"].cdNm' value='"+resultSet[no]["cdNm"]+"'>" +
+                						"</div>");
+                		
+                		checkList.push(ui.item.label);
+                		index ++;
+                		return;
+                	}
                 },
                 minLength: 0,
                 delay: 0
