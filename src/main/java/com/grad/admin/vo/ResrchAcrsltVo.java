@@ -10,6 +10,7 @@ public class ResrchAcrsltVo {
 	private String regstDt;
 	private String resrchYycl;
 	private String resrchText;
+	private String orgnzFullNm;
 	
 	public int getResrchAcrsltNo() {
 		return resrchAcrsltNo;
@@ -52,6 +53,13 @@ public class ResrchAcrsltVo {
 	}
 	public void setResrchText(String resrchText) {
 		this.resrchText = resrchText;
+	}
+	
+	public String getOrgnzFullNm() {
+		return orgnzFullNm;
+	}
+	public void setOrgnzFullNm(String orgnzFullNm) {
+		this.orgnzFullNm = orgnzFullNm;
 	}
 	@Override
 	public String toString() {

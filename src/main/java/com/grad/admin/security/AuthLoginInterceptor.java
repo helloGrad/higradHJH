@@ -8,6 +8,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -27,32 +28,24 @@ public class AuthLoginInterceptor extends HandlerInterceptorAdapter {
 		
 		String iden = request.getParameter("iden");
 		String pw=request.getParameter("pw");		
-		
 		System.out.println(iden+" "+pw);
 		
 		MemberVo memberVo=  memberService.getUser(iden, pw);
 		
 		if( memberVo == null){
 			
-//			String accept = request.getHeader("accept");			//������ Ŭ���̾�Ʈ�� ������ ������ ���ؼ� �Ѱ���
-//			if(accept.matches(".*application/json.*")){
-//				//�轼 ���̺귯���� ����Ͽ� �޼��������ͷ� json���·� ����
-//				//response.getOutputStream().write("{'result':'fail', 'message':'fail', 'data':{no:0}}");
-//			} else {
-//				response.sendRedirect(request.getContextPath()+"/login?result=fail");
-//			}
-			
-			System.out.println(request.getContextPath());
-			response.sendRedirect(request.getContextPath()+"/user/login?result=fail");
+//			response.sendRedirect(request.getContextPath()+"/user/login?result=fail");
 			return false;
 		}		
+		
 		
 		HttpSession session = request.getSession(true);
 		
 		session.setAttribute("authUser", memberVo);
-		response.sendRedirect(request.getContextPath()+"/");
+//		response.sendRedirect(request.getContextPath()+"/");
+		System.out.println("세션등록");
 		
-		return false;
+		return true;
 	}	
 
 }

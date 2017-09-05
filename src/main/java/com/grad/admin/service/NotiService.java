@@ -54,7 +54,4 @@ public class NotiService {
 		notiDao.updateNoti(map);
 	}
 
-
-
-
 }

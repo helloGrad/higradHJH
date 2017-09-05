@@ -1,4 +1,104 @@
 
+// 네이버 아이디 로그인 설정
+var naver_id_login = new naver_id_login("4XJQVjfPiPo3e5Xe23hL",
+		"http://127.0.0.1:8080/net/user/snslogin/");
+naver_id_login.setDomain(".127.0.0.1:8080/net/");
+var state = naver_id_login.getUniqState();
+naver_id_login.setButton("green", 3, 40);
+naver_id_login.setDomain("YOUR_SERVICE_URL");
+naver_id_login.setState(state);
+naver_id_login.init_naver_id_login();
+
+//페이스북 api 설정
+window.fbAsyncInit = function() {
+	FB.init({
+		appId : '824595201040077',
+		autoLogAppEvents : true,
+		xfbml : true,
+		version : 'v2.10'
+	});
+	FB.AppEvents.logPageView();
+};
+
+(function(d, s, id) {
+	var js, fjs = d.getElementsByTagName(s)[0];
+	if (d.getElementById(id)) {
+		return;
+	}
+	js = d.createElement(s);
+	js.id = id;
+	js.src = "//connect.facebook.net/en_US/sdk.js";
+	fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
+// 페이스북 로그인 정보 가져오기
+function getUserData(access_token) {
+	FB.api('/me', {
+		fields : 'name,email,gender,birthday'
+	}, function(data) {
+		// console.log(JSON.stringify(data));
+		// document.getElementById('status').innerHTML = "<br> 이름 : "
+		// + data.name
+		// + "<br> 이메일 : "
+		// + data.email
+		// + "<br> 성별 : "
+		// + data.gender
+		// + "<br> 생년월일 : "
+		// + data.birthday
+		// + "<br> 아이디 : "
+		// + data.id
+		// + "<br> 토큰값 : "
+		// + access_token;
+
+		$.ajax({
+			url : "/net/user/snslogin",
+			type : "post",
+			data : "name=" + data.name + "&email=" + data.email + "&gender="
+					+ data.gender + "&birthday=" + data.birthday + "&token="
+					+ data.id + "&sns=fb",
+			// $.ajax({
+			// url : "/net/user/snslogin",
+			// type : "post",
+			// data : data+"&sns=fb",
+			success : function(response) {
+				parent.window.location.href = "/net/orgnz";
+				console.log("success");
+				if (response.result === "fail") {
+					console.error("dddd" + response.message);
+					return;
+				}
+			},
+			error : function(jqXHR, status, e) {
+				console.log(jqXHR);
+				console.error(status);
+				console.error(e);
+			}
+
+		});
+	});
+}
+
+// 페이스북 로그인 버튼 클릭 시 토큰을 이용한 사용자 정보 가져와서 통신
+
+document.getElementById('facebookLogin').addEventListener('click', function() {
+	// do the login
+	FB.login(function(response) {
+		if (response.authResponse) {
+			access_token = response.authResponse.accessToken; // get access
+			// token
+			user_id = response.authResponse.userID; // get FB UID
+			console.log('access_token = ' + access_token);
+			console.log('user_id = ' + user_id);
+			getUserData(access_token);
+		}
+	}, {
+		scope : 'email,public_profile,user_birthday',
+		return_scopes : true
+	});
+
+}, false);
+
+
 // 회원가입 폼 유효성 검사
 
 $("#join-form")

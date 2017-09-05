@@ -24,6 +24,18 @@ textarea {
 	width: 300px;
 	overflow: visible
 }
+    /* autocomplete 스크롤 관련 css*/
+.ui-autocomplete {
+            max-height: 100px;
+            overflow-y: auto;
+            /* prevent horizontal scrollbar */
+            overflow-x: hidden;
+            /* add padding to account for vertical scrollbar */
+            padding-right: 20px;
+    }
+    /* IE 6 doesn't support max-height
+     * we use height instead, but this forces the menu to always be this tall
+     */
 </style>
 
 
@@ -32,6 +44,12 @@ textarea {
 		obj.style.height = "1px";
 		obj.style.height = (20 + obj.scrollHeight) + "px";
 	}
+</script>
+
+
+<script type="text/javascript">
+var index=0;
+var codeList = JSON.parse('${codeList}');
 </script>
 
 
@@ -55,9 +73,9 @@ textarea {
 				<h2>연구실 - 연구실이름/연구내용으로 구분</h2>
 				<form class="login-form" id="login-form" name="loginform"
 					method="post"
-					action="${pageContext.servletContext.contextPath }/organz/update?type=연구실">
+					action="${pageContext.servletContext.contextPath }/organz/update">
 					<div class="form-group">
-
+						<input type="hidden" id="type" name="type" value="${param.type }">
 						<input type="hidden" id="orgnzNo" name="orgnzNo"
 							value="${organzLabList.orgnzNo }"> 연구실 이름: <input
 							type="text" class="form-control" id="orgnzNm" name="orgnzNm"
@@ -114,9 +132,43 @@ textarea {
 								<option value="국외" selected="selected">국외</option>
 							</select>
 						</c:if>
-
-
+						
 						<br> <br>
+						지역: <input type="checkbox" id="AR00001" name="cdlist" value="AR00001" />서울 &nbsp;
+							<input type="checkbox" id="AR00002" name="cdlist" value="AR00002" />세종 &nbsp;
+							<input type="checkbox" id="AR00003" name="cdlist" value="AR00003" />인천 &nbsp;
+							<input type="checkbox" id="AR00004" name="cdlist" value="AR00004" />대전 &nbsp;
+							<input type="checkbox" id="AR00005" name="cdlist" value="AR00005" />대구 &nbsp;
+							<input type="checkbox" id="AR00006" name="cdlist" value="AR00006" />부산 &nbsp;
+							<input type="checkbox" id="AR00007" name="cdlist" value="AR00007" />울산 &nbsp;
+							<input type="checkbox" id="AR00008" name="cdlist" value="AR00008" />광주 &nbsp;
+							<input type="checkbox" id="AR00009" name="cdlist" value="AR00009" />경기 &nbsp;
+							<input type="checkbox" id="AR00010" name="cdlist" value="AR00010" />충북 &nbsp;
+							<input type="checkbox" id="AR00011" name="cdlist" value="AR00011" />충남 &nbsp;
+							<input type="checkbox" id="AR00012" name="cdlist" value="AR00012" />강원 &nbsp;
+							<input type="checkbox" id="AR00013" name="cdlist" value="AR00013" />경북 &nbsp;
+							<input type="checkbox" id="AR00014" name="cdlist" value="AR00014" />경남 &nbsp;
+							<input type="checkbox" id="AR00015" name="cdlist" value="AR00015" />전북 &nbsp;
+							<input type="checkbox" id="AR00016" name="cdlist" value="AR00016" />전남 &nbsp;
+							<input type="checkbox" id="AR00017" name="cdlist" value="AR00017" />제주 &nbsp;
+							<input type="checkbox" id="AR00018" name="cdlist" value="AR00018" />국외 &nbsp;
+						<br> <br>
+						
+						학위: <input type="checkbox" id="DE00001" name="cdlist" value="DE00001" />석사 &nbsp;
+							<input type="checkbox" id="DE00002" name="cdlist" value="DE00002" />박사&nbsp;
+							<input type="checkbox" id="DE00003" name="cdlist" value="DE00003" />석박사통합 &nbsp;
+							
+						<br> <br>
+						 <!-- 맞춤정보 입력란 -->
+						<div class="ui-widget">
+	  					<label for="tags">연구분야 : </label>
+	  					<input id="tags">
+	  					<div id="duplicateMsg" style="display: none">중복입니다 !!</div>
+	  					<div id="cdNmList">
+	  					</div>
+						</div>
+						<br> <br>
+						
 					</div>
 					<hr>
 					<button type="submit" class="form-control">수정</button>
@@ -133,7 +185,13 @@ textarea {
 		src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/js/search.js"></script>
-
+ 	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/js/organzjs/labdetail.js"></script>  
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/js/organzjs/insertgrad.js"></script> 
+			<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/js/organzjs/autoCompleteSroll.js"></script>
+		 
 
 </body>
 </html>

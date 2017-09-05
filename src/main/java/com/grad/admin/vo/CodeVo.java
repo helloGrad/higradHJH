@@ -5,10 +5,11 @@ public class CodeVo {
 
 	private String cdId;
 	private String cdNm;
-	private String engCodeNm;
 	private String cdDstnct;
 	private String prntsCdId;
-	private long orgnzNo;
+	private String engCodeNm;
+	private Long orgnzNo;
+	
 	public String getCdId() {
 		return cdId;
 	}
@@ -20,12 +21,6 @@ public class CodeVo {
 	}
 	public void setCdNm(String cdNm) {
 		this.cdNm = cdNm;
-	}
-	public String getEngCodeNm() {
-		return engCodeNm;
-	}
-	public void setEngCodeNm(String engCodeNm) {
-		this.engCodeNm = engCodeNm;
 	}
 	public String getCdDstnct() {
 		return cdDstnct;
@@ -39,17 +34,27 @@ public class CodeVo {
 	public void setPrntsCdId(String prntsCdId) {
 		this.prntsCdId = prntsCdId;
 	}
-	public long getOrgnzNo() {
+	public String getEngCodeNm() {
+		return engCodeNm;
+	}
+	public void setEngCodeNm(String engCodeNm) {
+		this.engCodeNm = engCodeNm;
+	}
+	
+	public Long getOrgnzNo() {
 		return orgnzNo;
 	}
-	public void setOrgnzNo(long orgnzNo) {
+	public void setOrgnzNo(Long orgnzNo) {
 		this.orgnzNo = orgnzNo;
 	}
 	@Override
 	public String toString() {
-		return "CodeVo [cdId=" + cdId + ", cdNm=" + cdNm + ", engCodeNm=" + engCodeNm + ", cdDstnct=" + cdDstnct
-				+ ", prntsCdId=" + prntsCdId + ", orgnzNo=" + orgnzNo + "]";
+		return "CodeVo [cdId=" + cdId + ", cdNm=" + cdNm + ", cdDstnct=" + cdDstnct + ", prntsCdId=" + prntsCdId
+				+ ", engCodeNm=" + engCodeNm + ", orgnzNo=" + orgnzNo + "]";
 	}
+
+	
+	
 	
 	
 	

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -21,14 +23,23 @@
 	<div class="container">
 		<hr class="nav-line">
 		<div class="row">
-			<c:forEach items="${resrchAcrsltList }" var="resrchAcrsltList"
-				varStatus="status">
-				<div class="col-md-12">
+			<div class="col-md-12">
+				<c:if test="${fn:length(resrchAcrsltList) == 0 }">
+				연구실적 정보가 없습니다. <br>
+					<br>
+					<a
+						href="${pageContext.servletContext.contextPath }/organz/insertform?type=연구실">연구실적
+						입력하러 가기</a>
+				</c:if>
+				<c:forEach items="${resrchAcrsltList }" var="resrchAcrsltList"
+					varStatus="status">
+
 					<a
 						href="${pageContext.servletContext.contextPath }/organz/resrchdetail?no=${resrchAcrsltList.resrchAcrsltNo}">${resrchAcrsltList.resrchYycl}/${resrchAcrsltList.acrsltDstnct}</a>
-				</div>
+					<br>
 
-			</c:forEach>
+				</c:forEach>
+			</div>
 		</div>
 	</div>
 

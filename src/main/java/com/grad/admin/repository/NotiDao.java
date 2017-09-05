@@ -7,7 +7,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.grad.admin.vo.CodeVo;
 import com.grad.admin.vo.NotiVo;
 
 @Repository
@@ -39,6 +38,7 @@ public class NotiDao {
 		else if (tabnm.equals("연구실")) {
 			vo = sqlSession.selectOne("noti.getLabByNo", no);
 		}
+
 		return vo;
 	}
 	
@@ -55,7 +55,5 @@ public class NotiDao {
 	public void updateNoti(Map<String, Object> map) {
 		sqlSession.update("noti.updateNoti", map);		
 	}
-
-
 
 }

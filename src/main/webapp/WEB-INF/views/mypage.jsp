@@ -4,7 +4,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/naverLogin_implicit-1.0.3_2.js" charset="utf-8"></script>
 </head>
 <body>
 
@@ -19,8 +21,15 @@
 		<br> <br> <br> 
 		<a href="${pageContext.servletContext.contextPath }/admin/list">정보입력</a>
 		
+		
+  		<div id="naver_id_login2">
+  		</div>
 
 
 
 </body>
+
+<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/js/login.js"></script>
+		
 </html>

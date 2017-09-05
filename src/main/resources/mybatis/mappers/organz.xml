@@ -28,13 +28,13 @@
 		]]>
 	</select>
 
-	<!-- 허주한 정예린-->
+	<!-- 허주한 정예린 -->
 	<select id="getOrgnzByNo" parameterType="map" resultType="organzVo">
 		<![CDATA[		
 		select o1.orgnz_no orgnzNo, o1.orgnz_nm orgnzNm, o1.ENG_ORGNZ_NM engOrgnzNm, o1.ORGNZ_DSTNCT orgnzDstnct, o1.HMPAGE_URL hmpageUrl, 
 		o1.TEL_NO telNo, o1.FAX_NO faxNo, o1.ADDR addr, o1.DETAIL_ADDR detailAddr, 
 		o1.PRNTS_ORGNZ_NO prntsOrgnzNo, o2.orgnz_full_nm orgnzFullNm, o1.MAP_PROF_NM mapProfNm, o1.LAB_INTRO labIntro, o1.RSRCHR_INFO_TEXT rsrchrInfoText, 
-		o1.HMNBRD_DSTNCT hmnbrdDstnct 
+		o1.HMNBRD_DSTNCT hmnbrdDstnct, o1.abolt_yn aboltYn
 		from organz o1, organz o2
 		where o1.ORGNZ_DSTNCT=#{type}
 		and o1.orgnz_no = #{no}
@@ -82,12 +82,25 @@
 	<select id="getResrchNo" resultType="resrchAcrsltVo"
 		parameterType="int">
 		<![CDATA[
-		select RESRCH_ACRSLT_NO resrchAcrsltNo,ORGNZ_NO orgnzNo,ACRSLT_DSTNCT acrsltDstnct,REGST_DT regstDt,RESRCH_YYCL resrchYycl,RESRCH_TEXT resrchText
-		from resrch_acrslt
-		where RESRCH_ACRSLT_NO=#{resrchAcrsltNo}
+		select r.RESRCH_ACRSLT_NO resrchAcrsltNo,r.ORGNZ_NO orgnzNo, o.orgnz_full_nm orgnzFullNm, r.ACRSLT_DSTNCT acrsltDstnct,r.REGST_DT regstDt,r.RESRCH_YYCL resrchYycl,r.RESRCH_TEXT resrchText
+		from resrch_acrslt r, organz o
+		where r.RESRCH_ACRSLT_NO=#{resrchAcrsltNo}
+		and r.orgnz_no = o.orgnz_no
 		]]>
 	</select>
 
+
+	<!-- 정예린 -->
+	<select id="selectOrganzInfo2" resultType="codeVo"
+		parameterType="map">
+      <![CDATA[
+      select o.ORGNZ_NO orgnzNo,o.CD_ID cdId,c.CD_NM cdNm,CD_DSTNCT cdDstnct
+      from organz_info o,CD c
+      where o.CD_ID=c.CD_ID 
+      and o.ORGNZ_NO=#{no}
+      and c.CD_DSTNCT = #{type } 
+      ]]>
+	</select>
 
 
 
@@ -112,8 +125,8 @@
 		 #{prntsOrgnzNo}, #{hmnbrdDstnct},concat(#{orgnzFullNm},' ',#{orgnzNm}), null);
 		]]>
 		</if>
-		
-		<if test="orgnzDstnct == '대학원'">
+
+		<if test="orgnzDstnct == '대학원' || orgnzDstnct == '학과'">
 		<![CDATA[ 
 		 #{prntsOrgnzNo}, #{hmnbrdDstnct},concat(#{orgnzFullNm},' ',#{orgnzNm}), #{grschDstnct});
 		]]>
@@ -142,14 +155,22 @@
 		]]>
 	</insert>
 
+	<!-- 정예린 -->
+	<insert id="insertOrganzInfo2" parameterType="codeVo">
+	<![CDATA[	
+			insert into organz_info (orgnz_no, cd_id) 
+			values (#{orgnzNo },#{cdId })
+		]]>
+	</insert>
+
 
 	<!-- update -->
-	<!-- 허주한  정예린-->
+	<!-- 허주한 정예린 -->
 	<update id="updateGrad" parameterType="organzVo">
 		<![CDATA[
 		update organz
 		set HMNBRD_DSTNCT=#{hmnbrdDstnct}, ORGNZ_DSTNCT=#{orgnzDstnct}, ORGNZ_NM=#{orgnzNm}, ENG_ORGNZ_NM=#{engOrgnzNm}, HMPAGE_URL=#{hmpageUrl}, TEL_NO=#{telNo}, FAX_NO=#{faxNo}, 
-			ADDR=#{addr}, DETAIL_ADDR=#{detailAddr}, 
+			ADDR=#{addr}, DETAIL_ADDR=#{detailAddr}, ABOLT_YN=ifnull(#{aboltYn}, 'N'), 
 		]]>
 
 		<if test="prntsOrgnzNo == -1 ">
@@ -189,6 +210,17 @@
 	</update>
 
 
+	<!-- 정예린 -->
+	<delete id="deleteOrganzInfo2" parameterType="map">
+	<![CDATA[
+	
+		delete o from organz_info as o join cd c on o.cd_id=c.cd_id 
+		where (c.cd_dstnct='전공' or c.cd_dstnct='학과') 
+		and o.orgnz_no=${no}
+		
+	]]>
+	</delete>
+	
 	<!-- ㄱㄴㄷ페이징 -->
 
 	<!-- 허주한 -->
@@ -220,8 +252,8 @@
 			and ORGNZ_DSTNCT = #{type }
 		]]>
 	</select>
-	
-	<!--정예린 연구실의 부모를 찾을 경우 대학원, 학과를 모두 찾음-->
+
+	<!--정예린 연구실의 부모를 찾을 경우 대학원, 학과를 모두 찾음 -->
 	<select id="getResultList2" parameterType="map" resultType="organzVo">
 		<![CDATA[	
 			select orgnz_no orgnzNo, orgnz_full_nm orgnzNm, orgnz_dstnct orgnzDstnct
@@ -230,8 +262,37 @@
 			and (orgnz_dstnct=#{type } or orgnz_dstnct=#{type2 })
 		]]>
 	</select>
+
+
+	<!-- 박가혜 -->
+	<insert id="insertOrganzInfo" parameterType="string">
+		<![CDATA[	
+			insert into organz_info (ORGNZ_NO, CD_ID ) values (#{orgnzNo},#{cdlist});
+		]]>
+	</insert>
+
+
+	<!-- 박가혜 -->
+	<delete id="deleteOrganzInfo" parameterType="int">
+	<![CDATA[
 	
-		<!-- 허주한 2017/08/29-->
+		delete from organz_info where ORGNZ_NO=#{orgnzNo };
+		
+	]]>
+
+	</delete>
+
+	<!-- 박가혜 -->
+	<select id="selectOrganzInfo" resultType="codeVo" parameterType="int">
+      <![CDATA[
+      select o.ORGNZ_NO orgnzNo,o.CD_ID cdId,c.CD_NM cdNm,CD_DSTNCT cdDstnct
+      from organz_info o,CD c
+      where o.CD_ID=c.CD_ID and o.ORGNZ_NO=#{orgnzNo}
+      ]]>
+	</select>
+
+
+	<!-- 허주한 2017/08/29 -->
 	<select id="getCode" resultType="codeVo" parameterType="string">
 			<![CDATA[
 			SELECT CD_ID cdId, CD_NM cdNm, ENG_CODE_NM engCodeNm, CD_DSTNCT cdDstnct, PRNTS_CD_ID prntsCdId
@@ -240,7 +301,9 @@
 			ORDER BY 2;
 			]]>
 	</select>
-	
+
+
+
 
 
 </mapper>

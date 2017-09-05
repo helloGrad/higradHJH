@@ -4,6 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  
+ 			<br>
 			<div id="charList" class="col-lg-12 centering">
 				<input id="type" type="hidden" value="${list[0].orgnzDstnct }" />
 				<button id="charBtn1" class="btn btn-primary" value='1'>ㄱ</button>

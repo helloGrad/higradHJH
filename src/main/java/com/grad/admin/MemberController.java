@@ -37,14 +37,12 @@ public class MemberController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model) {
 
-		System.out.println("login main");
 		return "login";
 	}
  
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String register(@ModelAttribute MemberVo memberVo) {
 
-		System.out.println(memberVo.getEmail() + " " + memberVo.getPw() + " " + memberVo.getNknm());
 		memberService.register(memberVo);
 
 		return "redirect:/user/login";

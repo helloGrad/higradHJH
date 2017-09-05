@@ -21,4 +21,10 @@ public class HomeController {
 		return "home";
 	}
 	
+	@RequestMapping("/test")
+	public String testPage() {
+		
+		return "testView";
+	}
+	
 }
